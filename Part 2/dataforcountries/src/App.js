@@ -27,14 +27,10 @@ function App(props) {
     setSearchResults([countries])
   }
   const PrintCountries=() =>{
-    console.log(weather)
     if(searchResults.length>10){
       return (<p> Too many  matches, specify another filter </p>)
     }
     if (searchResults.length===1){
-      setCity(searchResults[0].capital)
-      console.log(city)
-      console.log(weather)
       return(
         <div>
           <div>
