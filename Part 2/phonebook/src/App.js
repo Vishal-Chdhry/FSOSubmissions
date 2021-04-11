@@ -12,13 +12,11 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ newSearch, setNewSearch ] = useState('')
   const [ filterOutput, setFilterOutput ] = useState([])
-  const [ notification, setNotification ] = useState()
-  const [ error, setError ] = useState()
-
+  const [ notification, setNotification ] = useState(null)
+  const [ error, setError ] = useState(null)
   
   useEffect(() => {  personServices.getAll().then(response =>{setPersons(response)})  }, [])
   const names= persons.map(nmes => nmes.name)
-
 
   const handleNameChange= (event) => {
     setNewName(event.target.value)
@@ -83,17 +81,15 @@ const App = () => {
       }
     
     }
-    axios
-    .post('http://localhost:3001/persons', nameObject)
+    personServices.create(nameObject)
     .then(response => {
-      setPersons(persons.concat(response.data))
+      setPersons(persons.concat(response))
       setNotification(`${newName} has been added to the phonebook`)
-      console.log(response)
     })
+    .catch(err => setError(err.response.data.error))
     setNewName('')
     setNewNumber('')
   }
-
 
   const handleDelete = person =>{
     if (window.confirm(`Do you really want to delete ${person.name}`)) {

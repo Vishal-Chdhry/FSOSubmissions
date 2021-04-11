@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios'
 
 function App(props) {
@@ -8,7 +8,6 @@ function App(props) {
   let [ newSearch, setNewSearch ] = useState('')
   let [weather, setWeather] = useState([])
   const api_key = process.env.REACT_APP_API_KEY
-  const [city, setCity]= useState('')
 
   const handleSearchChange=(event) => {
     setNewSearch(event.target.value)
@@ -30,11 +29,9 @@ function App(props) {
       return (<p> Too many  matches, specify another filter </p>)
     }
     if (searchResults.length===1){
-      console.log(weather.length)
       if (weather.length===0){
         axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${searchResults[0].capital}`).then(response=> setWeather(response.data))
       }
-      console.log(weather)
       return(
         <div>
           <div>
@@ -70,7 +67,6 @@ function App(props) {
   }
 
 const PrintWeather=()=>{
-  console.log(weather)
   if(searchResults.length===1 && weather.length=== undefined){
       return (
       <div>
